@@ -1,0 +1,34 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Teable-esque Dark Mode Palette */
+    --background: 240 10% 3.9%; /* Nearly Black */
+    --foreground: 0 0% 98%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 263 70% 50%; /* Electric Purple */
+    --primary-foreground: 210 40% 98%;
+    --secondary: 240 3.7% 15.9%; /* Dark Gray for blocks */
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%; /* Subtle Borders */
+    --input: 240 3.7% 15.9%;
+    --radius: 0.5rem;
+  }
+}
+
+body {
+  @apply bg-background text-foreground;
+  /* The delicate grid pattern often seen in these apps */
+  background-image: linear-gradient(to right, #202020 1px, transparent 1px),
+    linear-gradient(to bottom, #202020 1px, transparent 1px);
+  background-size: 40px 40px;
+}
