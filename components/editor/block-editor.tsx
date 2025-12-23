@@ -7,6 +7,7 @@ import { useState, useCallback } from 'react';
 import { Heading, Bold, Italic, Strikethrough, List, ListOrdered, Quote, Undo, Redo, Save, Check } from 'lucide-react';
 import SlashCommand from '@/components/slash-command';
 import DOMPurify from 'dompurify';
+import { Button } from '@/components/ui/button';
 
 // Sanitize HTML content to prevent XSS
 const sanitizeContent = (html: string): string => {
@@ -162,44 +163,37 @@ const BlockEditor = () => {
         </div>
 
         <div className="mt-4 flex gap-2">
-          <button
+          <Button
+            variant="secondary"
+            size="sm"
+            leftIcon={<Undo className="w-4 h-4" />}
             onClick={() => editor.chain().focus().undo().run()}
             disabled={!editor.can().undo()}
-            className="flex items-center gap-1 px-3 py-1.5 text-sm rounded-md border border-zinc-700 text-zinc-300 hover:bg-zinc-800/50 disabled:opacity-50 disabled:cursor-not-allowed"
             title="Undo (Ctrl+Z)"
           >
-            <Undo className="w-4 h-4" /> Undo
-          </button>
-          <button
+            Undo
+          </Button>
+          <Button
+            variant="secondary"
+            size="sm"
+            leftIcon={<Redo className="w-4 h-4" />}
             onClick={() => editor.chain().focus().redo().run()}
             disabled={!editor.can().redo()}
-            className="flex items-center gap-1 px-3 py-1.5 text-sm rounded-md border border-zinc-700 text-zinc-300 hover:bg-zinc-800/50 disabled:opacity-50 disabled:cursor-not-allowed"
             title="Redo (Ctrl+Shift+Z)"
           >
-            <Redo className="w-4 h-4" /> Redo
-          </button>
+            Redo
+          </Button>
           <div className="flex-1"></div>
-          <button
+          <Button
+            variant={isSaved ? 'secondary' : 'primary'}
+            size="sm"
+            leftIcon={isSaved ? <Check className="w-4 h-4" /> : <Save className="w-4 h-4" />}
             onClick={handleSave}
             disabled={isSaving}
-            className={`flex items-center gap-1 px-3 py-1.5 text-sm rounded-md transition-colors ${
-              isSaved
-                ? 'bg-green-600/20 text-green-400 border border-green-600/50'
-                : 'bg-gradient-to-r from-purple-600 to-blue-600 text-white hover:opacity-90'
-            } disabled:opacity-50`}
+            className={isSaved ? 'border-green-500/50 text-green-400 shadow-[0_0_15px_rgba(34,197,94,0.25)]' : ''}
           >
-            {isSaved ? (
-              <>
-                <Check className="w-4 h-4" /> Saved
-              </>
-            ) : isSaving ? (
-              'Saving...'
-            ) : (
-              <>
-                <Save className="w-4 h-4" /> Save
-              </>
-            )}
-          </button>
+            {isSaved ? 'Saved' : isSaving ? 'Saving...' : 'Save'}
+          </Button>
         </div>
       </div>
     </div>

@@ -1,0 +1,53 @@
+{
+  "name": "GridBlock - Database with Soul",
+  "short_name": "GridBlock",
+  "description": "High-performance database with Notion-like block editing and elegant glassmorphic design",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#7A4854",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/Grid_icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshot.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide"
+    }
+  ],
+  "categories": ["productivity", "business", "utilities"],
+  "shortcuts": [
+    {
+      "name": "New Base",
+      "short_name": "New Base",
+      "description": "Create a new base",
+      "url": "/",
+      "icons": [
+        {
+          "src": "/Grid_icon.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ]
+}

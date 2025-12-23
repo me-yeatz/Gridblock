@@ -5,8 +5,8 @@ import { createTaskSchema, updateTaskSchema, type CreateTaskInput, type UpdateTa
 export type Task = {
   id: string;
   title: string;
-  status: string;
-  priority: string;
+  status: 'Todo' | 'In Progress' | 'Done';
+  priority: 'High' | 'Medium' | 'Low';
   assignee?: string;
   dueDate?: string;
   progress?: number;
