@@ -17,23 +17,20 @@ import { getInitialAppState } from '@/lib/initial-data';
 import { useAuth } from '@/lib/auth-context';
 
 export default function Home() {
-  const [showLanding, setShowLanding] = useState(false);
+  const [showLanding, setShowLanding] = useState(true);
   const [appState, setAppState] = useState<AppState>(getInitialAppState());
   const { isAuthenticated, isLoading } = useAuth();
   const router = useRouter();
-
-  // Check authentication
-  useEffect(() => {
-    if (!isLoading && !isAuthenticated) {
-      router.push('/login');
-    }
-  }, [isAuthenticated, isLoading, router]);
 
   // Check if user has previously launched the app
   useEffect(() => {
     const hasLaunched = localStorage.getItem('gridblock-launched');
     if (hasLaunched === 'true') {
       setShowLanding(false);
+      // Only redirect to login if they've launched before and are not authenticated
+      if (!isLoading && !isAuthenticated) {
+        router.push('/login');
+      }
     }
 
     // Load saved state from localStorage if available
@@ -45,9 +42,30 @@ export default function Home() {
         console.error('Failed to load saved state', e);
       }
     }
-  }, []);
+  }, [isAuthenticated, isLoading, router]);
 
-  // Show loading while checking auth
+  // Save state to localStorage whenever it changes
+  useEffect(() => {
+    if (!showLanding) {
+      localStorage.setItem('gridblock-state', JSON.stringify(appState));
+    }
+  }, [appState, showLanding]);
+
+  const handleLaunchApp = () => {
+    localStorage.setItem('gridblock-launched', 'true');
+    setShowLanding(false);
+    // Redirect to login after launching
+    if (!isAuthenticated) {
+      router.push('/login');
+    }
+  };
+
+  // Show landing page first
+  if (showLanding) {
+    return <LandingPage onLaunchApp={handleLaunchApp} />;
+  }
+
+  // Show loading while checking auth (after landing page is dismissed)
   if (isLoading) {
     return (
       <div className="flex min-h-screen items-center justify-center">
@@ -61,20 +79,6 @@ export default function Home() {
 
   if (!isAuthenticated) {
     return null;
-  }
-
-  // Save state to localStorage whenever it changes
-  useEffect(() => {
-    localStorage.setItem('gridblock-state', JSON.stringify(appState));
-  }, [appState]);
-
-  const handleLaunchApp = () => {
-    localStorage.setItem('gridblock-launched', 'true');
-    setShowLanding(false);
-  };
-
-  if (showLanding) {
-    return <LandingPage onLaunchApp={handleLaunchApp} />;
   }
 
   // Get current active items
